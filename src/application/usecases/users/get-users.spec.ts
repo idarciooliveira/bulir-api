@@ -1,16 +1,16 @@
-import { InMemoryUserRepository } from "src/repositories/in-memory-user-repository"
 import { CreateUser } from "./create-user"
 import { faker } from '@faker-js/faker';
-import { GetUserById } from "./get-user-by-id";
+import { GetUsers } from "./get-users";
+import { InMemoryUserRepository } from "src/application/repositories/in-memory-user-repository";
 
-describe('Get user by id', () => {
+describe('Get users', () => {
 
-    it('should be able to get user by id', async () => {
+    it('should be able to get all users', async () => {
         const userRepo = new InMemoryUserRepository()
         const createUser = new CreateUser(userRepo)
-        const sut = new GetUserById(userRepo)
+        const sut = new GetUsers(userRepo)
 
-        const user = await createUser.execute({
+        await createUser.execute({
             email: faker.internet.email(),
             fullname: faker.person.fullName(),
             password: faker.internet.password(),
@@ -23,19 +23,8 @@ describe('Get user by id', () => {
             fullname: faker.person.fullName(),
             password: faker.internet.password(),
             role: 'SERVICE_PROVIDER',
-            nif: '5001020502'
+            nif: '5001520102'
         })
-
-        const result = await sut.execute(user.Id)
-
-        expect(result).toBeTruthy()
-        expect(result).toBe(user)
-    })
-
-    it('should not be able to get user by wrong id', async () => {
-        const userRepo = new InMemoryUserRepository()
-        const createUser = new CreateUser(userRepo)
-        const sut = new GetUserById(userRepo)
 
         await createUser.execute({
             email: faker.internet.email(),
@@ -45,7 +34,9 @@ describe('Get user by id', () => {
             nif: '5001020502'
         })
 
-        await expect(sut.execute('wrong-id')).rejects.toThrow()
+        const result = await sut.execute()
+
+        expect(result).toHaveLength(3)
     })
 
 })

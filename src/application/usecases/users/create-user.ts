@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { UserRepository } from "src/repositories/user-repository";
 import * as bcrypt from 'bcrypt'
-import { User } from "src/entities/user";
+import { User } from "src/application/entities/user";
 import { AlreadyExistError } from "src/application/errors/error";
+import { UserRepository } from "src/application/repositories/user-repository";
 
 type CreateUserProps = {
     fullname: string

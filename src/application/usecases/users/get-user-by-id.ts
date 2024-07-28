@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { NotFoundError } from "src/application/errors/error";
-import { UserRepository } from "src/repositories/user-repository";
+import { UserRepository } from "src/application/repositories/user-repository";
 
 
 @Injectable()

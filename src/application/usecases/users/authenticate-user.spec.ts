@@ -1,4 +1,4 @@
-import { InMemoryUserRepository } from "src/repositories/in-memory-user-repository"
+import { InMemoryUserRepository } from "src/application/repositories/in-memory-user-repository"
 import { AuthenticateUser } from "./authenticate-user"
 import { CreateUser } from "./create-user"
 import { faker } from '@faker-js/faker'

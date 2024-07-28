@@ -1,8 +1,8 @@
-import { InMemoryUserRepository } from "src/repositories/in-memory-user-repository"
 import { CreateUser } from "./create-user"
 import { faker } from '@faker-js/faker';
-import { Role } from "src/entities/user";
 import { compare } from "bcrypt";
+import { Role } from "src/application/entities/user";
+import { InMemoryUserRepository } from "src/application/repositories/in-memory-user-repository";
 
 describe('Create user', () => {
 
