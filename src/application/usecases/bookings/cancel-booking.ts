@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { BookingStatus } from "src/application/entities/booking";
+import { Wallet } from "src/application/entities/wallet";
 import { BadRequestError, NotAuthorizatedError, NotFoundError } from "src/application/errors/error";
 import { BookingRepository } from "src/application/repositories/booking-repository";
 import { WalletRepository } from "src/application/repositories/wallet-repository";
@@ -27,8 +28,8 @@ export class CancelBooking {
         const providerWallet = await this.walletRepo.findByUserId(booking.ProviderId)
         const custumerWallet = await this.walletRepo.findByUserId(booking.CustumerId)
 
-        providerWallet.Balance -= booking.Total
         custumerWallet.Balance += booking.Total
+        providerWallet.Balance -= booking.Total
 
         booking.Status = BookingStatus.CANCELLED
 

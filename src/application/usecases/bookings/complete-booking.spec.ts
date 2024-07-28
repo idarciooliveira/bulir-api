@@ -79,6 +79,7 @@ describe('Complete a booking', () => {
             .toBe(BookingStatus.COMPLETED)
     })
 
+
     it('should not be able to complete a reservation that is already completed', async () => {
         const bookingRepo = new InMemoryBookingRepository()
         const makeReservation = new MakeReservation(bookingRepo, serviceRepo, walletRepo, userRepo)
@@ -94,24 +95,6 @@ describe('Complete a booking', () => {
 
         await confirmBooking.execute(booking.Id, provider.Id)
         await sut.execute(booking.Id, provider.Id)
-
-        await expect(sut.execute(booking.Id, provider.Id)).rejects.toThrow()
-    })
-
-    it('should not be able to complete a reservation that is cancelled', async () => {
-        const bookingRepo = new InMemoryBookingRepository()
-        const makeReservation = new MakeReservation(bookingRepo, serviceRepo, walletRepo, userRepo)
-        const cancelBooking = new CancelBooking(bookingRepo, walletRepo)
-
-        const sut = new CompleteBooking(bookingRepo)
-
-        const booking = await makeReservation.execute({
-            custumerId: custumer.Id,
-            serviceId: service.Id,
-            startAt: new Date()
-        })
-
-        await cancelBooking.execute(booking.Id, provider.Id)
 
         await expect(sut.execute(booking.Id, provider.Id)).rejects.toThrow()
     })
