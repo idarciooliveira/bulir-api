@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @unique
+  fullname        String
+  email           String    @unique
+  nif             String    @unique
+  password        String
+  role            String
+  Wallet          Wallet[]
+  Service         Service[]
+  BuyerBooking    Booking[] @relation("BuyerBooking")
+  ProviderBooking Booking[] @relation("ProviderBooking")
+
+  @@map("users")
+}
+
+model Wallet {
+  id      String @id @unique
+  userId  String
+  balance Float
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("wallets")
+}
+
+model Service {
+  id          String @id @unique
+  userId      String
+  name        String
+  description String
+  price       Float
+
+  user    User      @relation(fields: [userId], references: [id])
+  Booking Booking[]
+
+  @@map("services")
+}
+
+model Booking {
+  id         String   @id @unique
+  code       String   @unique
+  custumerId String
+  providerId String
+  serviceId  String
+  status     String
+  startAt    DateTime
+  createdAt  DateTime
+  total      Float
+
+  service  Service @relation(fields: [serviceId], references: [id])
+  custumer User    @relation("BuyerBooking", fields: [custumerId], references: [id])
+  provider User    @relation("ProviderBooking", fields: [providerId], references: [id])
+
+  @@map("bookings")
+}
