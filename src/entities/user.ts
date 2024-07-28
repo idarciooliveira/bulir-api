@@ -1,5 +1,9 @@
 import { randomUUID } from "crypto"
 
+export enum Role {
+    CUSTUMER = "CUSTUMER",
+    SERVICE_PROVIDER = "SERVICE_PROVIDER"
+}
 type UserProps = {
     fullname: string
     nif: string
