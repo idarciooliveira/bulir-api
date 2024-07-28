@@ -1,8 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import * as bcrypt from 'bcrypt'
 import { User } from "src/application/entities/user";
+import { Wallet } from "src/application/entities/wallet";
 import { AlreadyExistError } from "src/application/errors/error";
 import { UserRepository } from "src/application/repositories/user-repository";
+import { WalletRepository } from "src/application/repositories/wallet-repository";
 
 type CreateUserProps = {
     fullname: string
@@ -15,7 +17,8 @@ type CreateUserProps = {
 @Injectable()
 export class CreateUser {
 
-    constructor(private userRepo: UserRepository) { }
+    constructor(private userRepo: UserRepository,
+        private walletRepo: WalletRepository) { }
 
     async execute(props: CreateUserProps) {
 
@@ -32,7 +35,13 @@ export class CreateUser {
             password: hashPassword
         })
 
+        const wallet = new Wallet({
+            balance: 0,
+            userId: user.Id
+        })
+
         await this.userRepo.save(user)
+        await this.walletRepo.save(wallet)
 
         return user
     }

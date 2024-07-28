@@ -2,12 +2,14 @@ import { InMemoryUserRepository } from "src/application/repositories/in-memory-u
 import { AuthenticateUser } from "./authenticate-user"
 import { CreateUser } from "./create-user"
 import { faker } from '@faker-js/faker'
+import { InMemoryWalletRepository } from "src/application/repositories/in-memory-wallet-repository"
 
 describe('Authenticate user', () => {
 
     it('should be able to authenticate a user', async () => {
         const userRepo = new InMemoryUserRepository()
-        const createUser = new CreateUser(userRepo)
+        const walletRepo = new InMemoryWalletRepository()
+        const createUser = new CreateUser(userRepo, walletRepo)
         const sut = new AuthenticateUser(userRepo)
 
         const password = '1234'
@@ -28,7 +30,8 @@ describe('Authenticate user', () => {
 
     it('should not be able to authenticate user with wrong credential', async () => {
         const userRepo = new InMemoryUserRepository()
-        const createUser = new CreateUser(userRepo)
+        const walletRepo = new InMemoryWalletRepository()
+        const createUser = new CreateUser(userRepo, walletRepo)
         const sut = new AuthenticateUser(userRepo)
 
         const password = '1234'

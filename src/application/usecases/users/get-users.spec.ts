@@ -2,12 +2,14 @@ import { CreateUser } from "./create-user"
 import { faker } from '@faker-js/faker';
 import { GetUsers } from "./get-users";
 import { InMemoryUserRepository } from "src/application/repositories/in-memory-user-repository";
+import { InMemoryWalletRepository } from "src/application/repositories/in-memory-wallet-repository";
 
 describe('Get users', () => {
 
     it('should be able to get all users', async () => {
         const userRepo = new InMemoryUserRepository()
-        const createUser = new CreateUser(userRepo)
+        const walletRepo = new InMemoryWalletRepository()
+        const createUser = new CreateUser(userRepo, walletRepo)
         const sut = new GetUsers(userRepo)
 
         await createUser.execute({
