@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import * as bcrypt from 'bcrypt'
-import { User } from "src/application/entities/user";
+import { Role, User } from "src/application/entities/user";
 import { Wallet } from "src/application/entities/wallet";
-import { AlreadyExistError } from "src/application/errors/error";
+import { AlreadyExistError, BadRequestError } from "src/application/errors/error";
 import { UserRepository } from "src/application/repositories/user-repository";
 import { WalletRepository } from "src/application/repositories/wallet-repository";
 
@@ -22,7 +22,10 @@ export class CreateUser {
 
     async execute(props: CreateUserProps) {
 
-        console.log(props)
+        if (props.role !== Role.CUSTUMER && props.role !== Role.SERVICE_PROVIDER) {
+            throw new BadRequestError('INVALID ROLE')
+        }
+
         if (await this.userRepo.findByEmail(props.email))
             throw new AlreadyExistError('E-mail')
 
