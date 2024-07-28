@@ -5,9 +5,10 @@ import { CreateUser } from "src/application/usecases/users/create-user";
 import { GetUserById } from "src/application/usecases/users/get-user-by-id";
 import { GetUsers } from "src/application/usecases/users/get-users";
 import { UserController } from "./users/user.controller";
+import { AuthModule } from "../auth/auth.module";
 
 @Module({
-    imports: [DatabaseModule],
+    imports: [DatabaseModule, AuthModule],
     controllers: [UserController],
     providers: [
         AuthenticateUser,

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { DatabaseModule } from './infrastructure/database/database.module';
 import { HttpModule } from './infrastructure/https/https.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './infrastructure/auth/auth.module';
 
 @Module({
   imports: [
@@ -9,7 +10,8 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true
     }),
     DatabaseModule,
-    HttpModule
+    HttpModule,
+    AuthModule
   ],
 })
 export class AppModule { }
