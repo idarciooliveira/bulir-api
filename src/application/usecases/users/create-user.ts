@@ -22,6 +22,7 @@ export class CreateUser {
 
     async execute(props: CreateUserProps) {
 
+        console.log(props)
         if (await this.userRepo.findByEmail(props.email))
             throw new AlreadyExistError('E-mail')
 

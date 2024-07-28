@@ -31,6 +31,8 @@ export class PrismaUserRepository implements UserRepository {
             }
         })
 
+        if (!user) return null
+
         return PrismaUserMapper.toDomain(user)
     }
 
@@ -40,6 +42,8 @@ export class PrismaUserRepository implements UserRepository {
                 id
             }
         })
+
+        if (!user) return null
 
         return PrismaUserMapper.toDomain(user)
     }

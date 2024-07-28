@@ -18,7 +18,9 @@ export class User {
 
     constructor(props: UserProps, id?: string) {
         this._id = id ?? randomUUID()
-        this.props = props
+        this.props = {
+            ...props
+        }
     }
 
     public get Id() {
