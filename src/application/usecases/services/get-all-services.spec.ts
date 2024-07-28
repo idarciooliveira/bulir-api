@@ -6,7 +6,6 @@ import { faker } from '@faker-js/faker'
 import { InMemoryWalletRepository } from "src/application/repositories/in-memory-wallet-repository"
 import { CreateService } from "./create-service"
 import { InMemoryServiceRepository } from "src/application/repositories/in-memory-service-repository"
-import { GetServicesByUserId } from "./get-services-by-userId"
 import { GetAllService } from "./get-all-services"
 
 describe('Get all Services ', () => {

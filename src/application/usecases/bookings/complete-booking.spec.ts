@@ -72,8 +72,8 @@ describe('Complete a booking', () => {
             startAt: new Date()
         })
 
-        await confirmBooking.execute(booking.Id)
-        await sut.execute(booking.Id)
+        await confirmBooking.execute(booking.Id, provider.Id)
+        await sut.execute(booking.Id, provider.Id)
 
         expect(bookingRepo.Bookings[0].Status)
             .toBe(BookingStatus.COMPLETED)
@@ -92,16 +92,16 @@ describe('Complete a booking', () => {
             startAt: new Date()
         })
 
-        await confirmBooking.execute(booking.Id)
-        await sut.execute(booking.Id)
+        await confirmBooking.execute(booking.Id, provider.Id)
+        await sut.execute(booking.Id, provider.Id)
 
-        await expect(sut.execute(booking.Id)).rejects.toThrow()
+        await expect(sut.execute(booking.Id, provider.Id)).rejects.toThrow()
     })
 
     it('should not be able to complete a reservation that is cancelled', async () => {
         const bookingRepo = new InMemoryBookingRepository()
         const makeReservation = new MakeReservation(bookingRepo, serviceRepo, walletRepo, userRepo)
-        const cancelBooking = new CancelBooking(bookingRepo)
+        const cancelBooking = new CancelBooking(bookingRepo, walletRepo)
 
         const sut = new CompleteBooking(bookingRepo)
 
@@ -111,9 +111,9 @@ describe('Complete a booking', () => {
             startAt: new Date()
         })
 
-        await cancelBooking.execute(booking.Id)
+        await cancelBooking.execute(booking.Id, provider.Id)
 
-        await expect(sut.execute(booking.Id)).rejects.toThrow()
+        await expect(sut.execute(booking.Id, provider.Id)).rejects.toThrow()
     })
 
 

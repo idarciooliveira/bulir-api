@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { BookingStatus } from "src/application/entities/booking";
-import { BadRequestError, NotFoundError } from "src/application/errors/error";
+import { BadRequestError, NotAuthorizatedError, NotFoundError } from "src/application/errors/error";
 import { BookingRepository } from "src/application/repositories/booking-repository";
 
 
@@ -8,9 +8,12 @@ import { BookingRepository } from "src/application/repositories/booking-reposito
 export class CompleteBooking {
     constructor(private bookingRepo: BookingRepository) { }
 
-    async execute(bookingId: string) {
+    async execute(bookingId: string, userId: string) {
         const booking = await this.bookingRepo.findById(bookingId)
         if (!booking) throw new NotFoundError('Booking')
+
+        if (booking.ProviderId !== userId)
+            throw new NotAuthorizatedError()
 
         if (booking.Status === BookingStatus.CANCELLED)
             throw new BadRequestError('Booking already cancelled')

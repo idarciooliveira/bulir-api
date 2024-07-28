@@ -15,6 +15,15 @@ import { GetAllService } from "src/application/usecases/services/get-all-service
 import { GetServicesByUserId } from "src/application/usecases/services/get-services-by-userId";
 import { GetServiceById } from "src/application/usecases/services/get-service-by-id";
 import { CreateService } from "src/application/usecases/services/create-service";
+import { CancelBooking } from "src/application/usecases/bookings/cancel-booking";
+import { CompleteBooking } from "src/application/usecases/bookings/complete-booking";
+import { ConfirmBooking } from "src/application/usecases/bookings/confirm-booking";
+import { MakeReservation } from "src/application/usecases/bookings/make-reservation";
+import { BookingController } from "./bookings/booking.controller";
+import { GetAllBooking } from "src/application/usecases/bookings/get-all-booking";
+import { GetBookingByCustumerId } from "src/application/usecases/bookings/get-booking-by-custumerId";
+import { GetBookingById } from "src/application/usecases/bookings/get-booking-by-id";
+import { GetBookingByProviderId } from "src/application/usecases/bookings/get-booking-by-providerId";
 
 @Module({
     imports: [DatabaseModule, AuthModule],
@@ -22,7 +31,8 @@ import { CreateService } from "src/application/usecases/services/create-service"
         UserController,
         AuthController,
         WalletController,
-        ServiceController
+        ServiceController,
+        BookingController
     ],
     providers: [
         AuthenticateUser,
@@ -34,7 +44,15 @@ import { CreateService } from "src/application/usecases/services/create-service"
         CreateService,
         GetAllService,
         GetServicesByUserId,
-        GetServiceById
+        GetServiceById,
+        CancelBooking,
+        CompleteBooking,
+        ConfirmBooking,
+        MakeReservation,
+        GetAllBooking,
+        GetBookingByCustumerId,
+        GetBookingById,
+        GetBookingByProviderId
     ]
 })
 

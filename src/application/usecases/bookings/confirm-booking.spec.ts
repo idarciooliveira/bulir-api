@@ -71,7 +71,7 @@ describe('Confirm booking', () => {
             startAt: new Date()
         })
 
-        await sut.execute(booking.Id)
+        await sut.execute(booking.Id, provider.Id)
 
         expect(bookingRepo.Bookings[0].Status)
             .toBe(BookingStatus.CONFIRMED)
@@ -90,16 +90,16 @@ describe('Confirm booking', () => {
             startAt: new Date()
         })
 
-        await sut.execute(booking.Id)
-        await completeBooking.execute(booking.Id)
+        await sut.execute(booking.Id, provider.Id)
+        await completeBooking.execute(booking.Id, provider.Id)
 
-        await expect(sut.execute(booking.Id)).rejects.toThrow()
+        await expect(sut.execute(booking.Id, provider.Id)).rejects.toThrow()
     })
 
     it('should not be able to confirm a reservation that is cancelled', async () => {
         const bookingRepo = new InMemoryBookingRepository()
         const makeReservation = new MakeReservation(bookingRepo, serviceRepo, walletRepo, userRepo)
-        const cancelBooking = new CancelBooking(bookingRepo)
+        const cancelBooking = new CancelBooking(bookingRepo, walletRepo)
 
         const sut = new ConfirmBooking(bookingRepo)
 
@@ -109,9 +109,9 @@ describe('Confirm booking', () => {
             startAt: new Date()
         })
 
-        await cancelBooking.execute(booking.Id)
+        await cancelBooking.execute(booking.Id, provider.Id)
 
-        await expect(sut.execute(booking.Id)).rejects.toThrow()
+        await expect(sut.execute(booking.Id, provider.Id)).rejects.toThrow()
     })
 
 
