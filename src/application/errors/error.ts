@@ -18,6 +18,12 @@ export class BadRequestError extends BadRequestException {
     }
 }
 
+export class InsufficientFundsError extends BadRequestException {
+    constructor() {
+        super('Insufficient funds. Please add more funds to your wallet to complete the transaction!')
+    }
+}
+
 export class AlreadyExistError extends BadRequestException {
     constructor(error: string) {
         super(`${error} Already exist`)

@@ -1,6 +1,12 @@
 
 import { randomUUID } from "crypto"
 
+export enum BookingStatus {
+    COMPLETED = 'COMPLETA',
+    CANCELLED = 'CANCELADO',
+    CONFIRMED = 'CONFIRMADO',
+    PENDING = 'PENDENTE'
+}
 type BookingProps = {
     code: string
     custumerId: string
