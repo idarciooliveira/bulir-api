@@ -18,7 +18,7 @@ describe('Create user', () => {
             email: faker.internet.email(),
             fullname: faker.person.fullName(),
             password,
-            role: 'SERVICE_PROVIDER',
+            role: Role.SERVICE_PROVIDER,
             nif: '5001020102'
         })
 
@@ -36,7 +36,7 @@ describe('Create user', () => {
             email: faker.internet.email(),
             fullname: faker.person.fullName(),
             password: faker.internet.password(),
-            role: 'SERVICE_PROVIDER',
+            role: Role.CUSTUMER,
             nif: '5001020102'
         })
 
@@ -53,7 +53,7 @@ describe('Create user', () => {
             email: faker.internet.email(),
             fullname: faker.person.fullName(),
             password: faker.internet.password(),
-            role: 'SERVICE_PROVIDER',
+            role: Role.CUSTUMER,
             nif: '5001020102'
         })
 

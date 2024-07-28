@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker';
 import { GetUserById } from "./get-user-by-id";
 import { InMemoryUserRepository } from "src/application/repositories/in-memory-user-repository";
 import { InMemoryWalletRepository } from "src/application/repositories/in-memory-wallet-repository";
+import { Role } from "src/application/entities/user";
 
 describe('Get user by id', () => {
 
@@ -16,7 +17,7 @@ describe('Get user by id', () => {
             email: faker.internet.email(),
             fullname: faker.person.fullName(),
             password: faker.internet.password(),
-            role: 'SERVICE_PROVIDER',
+            role: Role.CUSTUMER,
             nif: '5001020102'
         })
 
@@ -24,7 +25,7 @@ describe('Get user by id', () => {
             email: faker.internet.email(),
             fullname: faker.person.fullName(),
             password: faker.internet.password(),
-            role: 'SERVICE_PROVIDER',
+            role: Role.CUSTUMER,
             nif: '5001020502'
         })
 
@@ -44,7 +45,7 @@ describe('Get user by id', () => {
             email: faker.internet.email(),
             fullname: faker.person.fullName(),
             password: faker.internet.password(),
-            role: 'SERVICE_PROVIDER',
+            role: Role.CUSTUMER,
             nif: '5001020502'
         })
 
