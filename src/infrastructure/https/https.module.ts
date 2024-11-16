@@ -24,6 +24,8 @@ import { GetAllBooking } from "src/application/usecases/bookings/get-all-booking
 import { GetBookingByCustumerId } from "src/application/usecases/bookings/get-booking-by-custumerId";
 import { GetBookingById } from "src/application/usecases/bookings/get-booking-by-id";
 import { GetBookingByProviderId } from "src/application/usecases/bookings/get-booking-by-providerId";
+import { DeleteService } from "src/application/usecases/services/delete-service";
+import { UpdateService } from "src/application/usecases/services/update-service";
 
 @Module({
     imports: [DatabaseModule, AuthModule],
@@ -52,7 +54,9 @@ import { GetBookingByProviderId } from "src/application/usecases/bookings/get-bo
         GetAllBooking,
         GetBookingByCustumerId,
         GetBookingById,
-        GetBookingByProviderId
+        GetBookingByProviderId,
+        DeleteService,
+        UpdateService
     ]
 })
 

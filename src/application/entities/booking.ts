@@ -1,5 +1,7 @@
 
 import { randomUUID } from "crypto"
+import { User } from "./user"
+import { Service } from "./service"
 
 export enum BookingStatus {
     COMPLETED = 'COMPLETA',
@@ -16,6 +18,10 @@ type BookingProps = {
     startAt: Date
     createdAt: Date
     total: number
+    provider?: User
+    service?: Service
+    custumer?: User
+
 }
 
 export class Booking {
@@ -93,5 +99,30 @@ export class Booking {
 
     public set Status(value: string) {
         this.props.status = value
+    }
+
+    public get Provider() {
+        return this.props.provider
+    }
+
+    public set Provider(value: User) {
+        this.props.provider = value
+    }
+
+    public get Custumer() {
+        return this.props.custumer
+    }
+
+    public set Custumer(value: User) {
+        this.props.custumer = value
+    }
+
+    
+    public get Service() {
+        return this.props.service
+    }
+
+    public set Service(value: Service) {
+        this.props.service = value
     }
 }

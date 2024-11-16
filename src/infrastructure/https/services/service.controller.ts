@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "src/infrastructure/auth/passport/jwt-auth.guard";
 import { ServiceViewModel } from "./service-view-model";
 import { GetAllService } from "src/application/usecases/services/get-all-services";
@@ -10,6 +10,8 @@ import { CreateService } from "src/application/usecases/services/create-service"
 import { Roles } from "src/infrastructure/auth/rbac/role.decorator";
 import { Role } from "src/application/entities/user";
 import { RoleGuard } from "src/infrastructure/auth/rbac/role.guard";
+import { DeleteService } from "src/application/usecases/services/delete-service";
+import { UpdateService } from "src/application/usecases/services/update-service";
 
 @UseGuards(JwtAuthGuard)
 @Controller('services')
@@ -17,7 +19,9 @@ export class ServiceController {
     constructor(private createService: CreateService,
         private getAllServices: GetAllService,
         private getServicesByUserId: GetServicesByUserId,
-        private getServiceById: GetServiceById) { }
+        private getServiceById: GetServiceById,
+    private deleteService: DeleteService,
+private updateService: UpdateService) { }
 
     @UseGuards(RoleGuard)
     @Roles(Role.SERVICE_PROVIDER)
@@ -31,6 +35,27 @@ export class ServiceController {
         })
 
         return ServiceViewModel.toHTTP(service)
+    }
+
+    @UseGuards(RoleGuard)
+    @Roles(Role.SERVICE_PROVIDER)
+    @Put('/:id')
+    async update(@Body() body: CreateServiceDto,
+        @Param('id') id: string) {
+
+        await this.updateService.execute({
+            ...body,
+            id
+        })
+
+    }
+
+    @UseGuards(RoleGuard)
+    @Roles(Role.SERVICE_PROVIDER)
+    @Delete('/:id')
+    async delete(@Param('id') id: string) {
+
+      await this.deleteService.execute({ id})
     }
 
 

@@ -8,11 +8,30 @@ import { PrismaServiceMapper } from "../mappers/prisma-service-mapper";
 @Injectable()
 export class PrismaServiceRepository implements ServiceRepository {
     constructor(private readonly prismaService: PrismaService) { }
+    
+    async update(service: Service): Promise<void> {
+        const raw = PrismaServiceMapper.toPrisma(service)
+        await this.prismaService.service.update({
+            data: raw,
+            where: {
+                id: service.Id
+            }
+        })
+    }
 
     async findByUserId(userId: string): Promise<Service[]> {
         const services = await this.prismaService.service.findMany({
             where: {
-                userId
+                userId,
+                isDeleted: false
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        fullname: true
+                    }
+                }
             }
         })
         return services.map(PrismaServiceMapper.toDomain)
@@ -29,13 +48,33 @@ export class PrismaServiceRepository implements ServiceRepository {
         const service = await this.prismaService.service.findUnique({
             where: {
                 id
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        fullname: true
+                    }
+                }
             }
         })
 
         return PrismaServiceMapper.toDomain(service)
     }
     async getAll(): Promise<Service[]> {
-        const services = await this.prismaService.service.findMany()
+        const services = await this.prismaService.service.findMany({
+            where: {
+                isDeleted: false
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        fullname: true
+                    }
+                }
+            }
+        })
         return services.map(PrismaServiceMapper.toDomain)
     }
 }

@@ -39,11 +39,12 @@ model Wallet {
 }
 
 model Service {
-  id          String @id @unique
+  id          String  @id @unique
   userId      String
   name        String
   description String
   price       Float
+  isDeleted   Boolean @default(false)
 
   user    User      @relation(fields: [userId], references: [id])
   Booking Booking[]

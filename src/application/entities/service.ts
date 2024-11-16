@@ -1,10 +1,13 @@
 import { randomUUID } from "crypto"
+import { User } from "./user"
 
 type ServiceProps = {
     name: string
     description: string
     price: number
     userId: string
+    isDeleted?: boolean
+    user?: User
 }
 
 export class Service {
@@ -13,7 +16,10 @@ export class Service {
 
     constructor(props: ServiceProps, id?: string) {
         this._id = id ?? randomUUID()
-        this.props = props
+        this.props = {
+            ...props,
+            isDeleted: false
+        }
     }
 
     public get Id() {
@@ -44,11 +50,27 @@ export class Service {
         this.props.price = value
     }
 
+    public get IsDeleted() {
+        return this.props.isDeleted
+    }
+
+    public set IsDeleted(value: boolean) {
+        this.props.isDeleted = value
+    }
+
     public get UserId() {
         return this.props.userId
     }
 
     public set UserId(value: string) {
         this.props.userId = value
+    }
+
+    public get User() {
+        return this.props.user
+    }
+
+    public set User(value: User) {
+        this.props.user = value
     }
 }

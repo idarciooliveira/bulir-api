@@ -1,5 +1,6 @@
 import { Booking as RawBooking } from '@prisma/client'
 import { Booking } from '../../../../application/entities/booking';
+import { Replace } from 'src/helpers/replace';
 
 export class PrismaBookingMapper {
     static toPrisma(booking: Booking): RawBooking {
@@ -16,7 +17,11 @@ export class PrismaBookingMapper {
         };
     }
 
-    static toDomain(raw: RawBooking): Booking {
+    static toDomain(raw: Replace<RawBooking,{
+        custumer: any,
+        service: any,
+        provider: any
+    }>): Booking {
         return new Booking(
             {
                 code: raw.code,
@@ -26,7 +31,10 @@ export class PrismaBookingMapper {
                 serviceId: raw.serviceId,
                 startAt: raw.startAt,
                 status: raw.status,
-                total: raw.total
+                total: raw.total,
+                custumer: raw.custumer,
+                service: raw.service,
+                provider: raw.provider
             },
             raw.id,
         );

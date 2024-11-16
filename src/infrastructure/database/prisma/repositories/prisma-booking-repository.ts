@@ -24,6 +24,26 @@ export class PrismaBookingRepository implements BookingRepository {
         const bookings = await this.prismaService.booking.findMany({
             where: {
                 custumerId
+            },
+            include: {
+                custumer: {
+                    select: {
+                        id: true,
+                        fullname: true
+                    }
+                },
+                provider: {
+                    select: {
+                        id: true,
+                        fullname: true
+                    }
+                },
+                service: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                }
             }
         })
         return bookings.map(PrismaBookingMapper.toDomain)
@@ -32,6 +52,26 @@ export class PrismaBookingRepository implements BookingRepository {
         const bookings = await this.prismaService.booking.findMany({
             where: {
                 providerId
+            },
+            include: {
+                custumer: {
+                    select: {
+                        id: true,
+                        fullname: true
+                    }
+                },
+                provider: {
+                    select: {
+                        id: true,
+                        fullname: true
+                    }
+                },
+                service: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                }
             }
         })
         return bookings.map(PrismaBookingMapper.toDomain)
@@ -48,13 +88,55 @@ export class PrismaBookingRepository implements BookingRepository {
         const booking = await this.prismaService.booking.findUnique({
             where: {
                 id
+            },
+            include: {
+                custumer: {
+                    select: {
+                        id: true,
+                        fullname: true
+                    }
+                },
+                provider: {
+                    select: {
+                        id: true,
+                        fullname: true
+                    }
+                },
+                service: {
+                    select: {
+                        id: true,
+                        name: true,
+                        description: true
+                    }
+                }
             }
         })
 
         return PrismaBookingMapper.toDomain(booking)
     }
     async getAll(): Promise<Booking[]> {
-        const bookings = await this.prismaService.booking.findMany()
+        const bookings = await this.prismaService.booking.findMany({
+            include: {
+                custumer: {
+                    select: {
+                        id: true,
+                        fullname: true
+                    }
+                },
+                provider: {
+                    select: {
+                        id: true,
+                        fullname: true
+                    }
+                },
+                service: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                }
+            }
+        })
         return bookings.map(PrismaBookingMapper.toDomain)
     }
 }

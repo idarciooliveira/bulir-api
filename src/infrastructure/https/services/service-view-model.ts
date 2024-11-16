@@ -7,7 +7,7 @@ export class ServiceViewModel {
             name: service.Name,
             description: service.Description,
             price: service.Price,
-            userId: service.UserId
+            user: service.User
         };
     }
 }

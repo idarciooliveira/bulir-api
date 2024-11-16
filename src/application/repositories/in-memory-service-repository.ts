@@ -2,8 +2,15 @@ import { Service } from "../entities/service";
 import { ServiceRepository } from "./service-repository";
 
 export class InMemoryServiceRepository implements ServiceRepository {
+    
 
     public services: Service[] = []
+
+    async update(service: Service): Promise<void> {
+        const index = this.services.findIndex(service => service.Id == service.Id)
+        if (index >= 0) this.services[index] = service
+    }
+
 
     async getAll(): Promise<Service[]> {
         return this.services

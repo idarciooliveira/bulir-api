@@ -6,12 +6,12 @@ export class BookingViewModel {
             id: booking.Id,
             code: booking.Code,
             createdAt: booking.CreatedAt,
-            custumerId: booking.CustumerId,
-            providerId: booking.ProviderId,
-            serviceId: booking.ServiceId,
             startAt: booking.StartAt,
             status: booking.Status,
-            total: booking.Total
+            total: booking.Total,
+            provider: booking.Provider,
+            custumer: booking.Custumer,
+            service: booking.Service
         };
     }
 }
